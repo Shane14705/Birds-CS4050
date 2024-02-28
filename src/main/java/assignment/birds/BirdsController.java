@@ -111,6 +111,8 @@ public class BirdsController implements Initializable {
         String img = bird.getImage();
         Image birdImage = new Image("file:src/main/resources/assignment/birds/images/" + img);
         image.setImage(birdImage);
+        // Log DataKey and BirdRecord details
+        System.out.println("Showing Bird: " + bird.getDataKey().getBirdName() + ", About: " + bird.getAbout() + ", Sound: " + bird.getSound() + ", Image: " + bird.getImage());
         title.setText(bird.getDataKey().getBirdName());
         about.setText(bird.getAbout());
     }
@@ -154,20 +156,74 @@ public class BirdsController implements Initializable {
     }
 
     public void first() {
-        // Write this method
+        try {
+            System.out.println("[first] Attempting to find the smallest bird record.");
+            BirdRecord smallest = database.smallest();
+            if (smallest != null && smallest.getDataKey() != null) {
+                System.out.println("[first] Smallest BirdRecord found: " + smallest.getDataKey().getBirdName());
+                showBird();
+            } else {
+                throw new DictionaryException("Error: Smallest BirdRecord or its key is null.");
+            }
+        } catch (DictionaryException ex) {
+            System.out.println("[first] Exception caught: " + ex.getMessage());
+            displayAlert("No birds in the database.");
+        }
     }
+
+
+
 
     public void last() {
-        // Write this method
+        try {
+            bird = database.largest();
+            if (bird != null) {
+                showBird();
+            }
+        } catch (DictionaryException ex) {
+            displayAlert("No birds in the database.");
+        }
     }
 
+
     public void next() {
-        // Write this method;
+        if (bird == null) {
+            displayAlert("No current bird selected.");
+            return;
+        }
+
+        try {
+            BirdRecord nextBird = database.successor(bird.getDataKey());
+            if (nextBird != null) {
+                bird = nextBird;
+                showBird();
+            } else {
+                displayAlert("This is the last bird in the database.");
+            }
+        } catch (DictionaryException ex) {
+            displayAlert("Error finding next bird: " + ex.getMessage());
+        }
     }
 
     public void previous() {
-        // Write this method
+        if (bird == null) {
+            displayAlert("No current bird selected.");
+            return;
+        }
+
+        try {
+            BirdRecord previousBird = database.predecessor(bird.getDataKey());
+            if (previousBird != null) {
+                bird = previousBird;
+                showBird();
+            } else {
+                displayAlert("This is the first bird in the database.");
+            }
+        } catch (DictionaryException ex) {
+            displayAlert("Error finding previous bird: " + ex.getMessage());
+        }
     }
+
 
     public void play() {
         String filename = "src/main/resources/assignment/birds/sounds/" + bird.getSound();
@@ -186,6 +242,7 @@ public class BirdsController implements Initializable {
         }
     }
 
+    /*
     public void loadDictionary() {
         Scanner input;
         int line = 0;
@@ -220,6 +277,46 @@ public class BirdsController implements Initializable {
         this.BirdPortal.setVisible(true);
         this.first();
     }
+*/
+    public void loadDictionary() {
+        Scanner input;
+        int line = 0;
+        try {
+            String birdName = "";
+            String description;
+            int size = 0;
+            input = new Scanner(new File("BirdsDatabase.txt"));
+            while (input.hasNext()) { // read until the end of file
+                String data = input.nextLine();
+                switch (line % 3) {
+                    case 0:
+                        size = Integer.parseInt(data);
+                        break;
+                    case 1:
+                        birdName = data;
+                        break;
+                    case 2:
+                        description = data;
+                        DataKey key = new DataKey(birdName, size); // Create DataKey
+                        BirdRecord birdRecord = new BirdRecord(key, description, birdName + ".mp3", birdName + ".jpg"); // Create BirdRecord
+                        database.insert(birdRecord);
+                        // Logging DataKey and BirdRecord details
+                        System.out.println("Inserted DataKey: " + key.getBirdName() + ", Size: " + key.getBirdSize());
+                        System.out.println("Inserted BirdRecord for: " + birdName + " with details: About: " + description + ", Sound: " + birdName + ".mp3" + ", Image: " + birdName + ".jpg");
+                        break;
+                }
+                line++;
+            }
+        } catch (IOException e) {
+            System.out.println("There was an error in reading or opening the file: BirdsDatabase.txt");
+            System.out.println(e.getMessage());
+        } catch (DictionaryException ex) {
+            Logger.getLogger(BirdsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.BirdPortal.setVisible(true);
+        this.first(); // Load and display the first bird in the database
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
