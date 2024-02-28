@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -159,6 +160,8 @@ public class BirdsController implements Initializable {
         try {
             System.out.println("[first] Attempting to find the smallest bird record.");
             BirdRecord smallest = database.smallest();
+            bird = smallest;
+            System.out.println("SMALLEST NAME:" + smallest.getImage());
             if (smallest != null && smallest.getDataKey() != null) {
                 System.out.println("[first] Smallest BirdRecord found: " + smallest.getDataKey().getBirdName());
                 showBird();
@@ -242,7 +245,7 @@ public class BirdsController implements Initializable {
         }
     }
 
-    /*
+
     public void loadDictionary() {
         Scanner input;
         int line = 0;
@@ -257,13 +260,18 @@ public class BirdsController implements Initializable {
                 switch (line % 3) {
                     case 0:
                         size = Integer.parseInt(data);
+                        System.out.println("[load] BIRD SIZE:" + birdSize);
                         break;
                     case 1:
                         birdName = data;
+                        System.out.println("[load] BIRD NAME:" + birdName);
                         break;
                     default:
                         description = data;
-                        database.insert(new BirdRecord(new DataKey(birdName, size), description, birdName + ".mp3", birdName + ".jpg"));
+                        DataKey key = new DataKey(birdName, size);
+                        System.out.println("[load] BIRD DESCRIPTION:" + description);
+                        System.out.println("[load] BIRD KEY:" + key.getBirdName() + "," + key.getBirdSize());
+                        database.insert(new BirdRecord(key, description, birdName + ".mp3", birdName + ".jpg"));
                         break;
                 }
                 line++;
@@ -277,46 +285,6 @@ public class BirdsController implements Initializable {
         this.BirdPortal.setVisible(true);
         this.first();
     }
-*/
-    public void loadDictionary() {
-        Scanner input;
-        int line = 0;
-        try {
-            String birdName = "";
-            String description;
-            int size = 0;
-            input = new Scanner(new File("BirdsDatabase.txt"));
-            while (input.hasNext()) { // read until the end of file
-                String data = input.nextLine();
-                switch (line % 3) {
-                    case 0:
-                        size = Integer.parseInt(data);
-                        break;
-                    case 1:
-                        birdName = data;
-                        break;
-                    case 2:
-                        description = data;
-                        DataKey key = new DataKey(birdName, size); // Create DataKey
-                        BirdRecord birdRecord = new BirdRecord(key, description, birdName + ".mp3", birdName + ".jpg"); // Create BirdRecord
-                        database.insert(birdRecord);
-                        // Logging DataKey and BirdRecord details
-                        System.out.println("Inserted DataKey: " + key.getBirdName() + ", Size: " + key.getBirdSize());
-                        System.out.println("Inserted BirdRecord for: " + birdName + " with details: About: " + description + ", Sound: " + birdName + ".mp3" + ", Image: " + birdName + ".jpg");
-                        break;
-                }
-                line++;
-            }
-        } catch (IOException e) {
-            System.out.println("There was an error in reading or opening the file: BirdsDatabase.txt");
-            System.out.println(e.getMessage());
-        } catch (DictionaryException ex) {
-            Logger.getLogger(BirdsController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        this.BirdPortal.setVisible(true);
-        this.first(); // Load and display the first bird in the database
-    }
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
