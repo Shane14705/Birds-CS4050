@@ -58,55 +58,35 @@ public class OrderedDictionary implements OrderedDictionaryADT {
         if (r == null || r.getDataKey() == null) {
             throw new IllegalArgumentException("Cannot insert null BirdRecord or BirdRecord with null DataKey.");
         }
-        // debugging statement to log the attempt to insert a bird record.
         System.out.println("[insert] Attempting to insert BirdRecord: " + r.getDataKey().getBirdName());
-        if (root == null) {
+        if (root.getData().getDataKey() == null) {
             System.out.println("[insert] Initializing root with: " + r.getDataKey().getBirdName());
             root = new Node(r);
-            return; // Early return as the tree was empty, and now root is initialized.
+        } else {
+            System.out.println("[insert] Inserting new node.");
+            insertRec(root, r);
         }
-        // Otherwise, proceed with recursive insertion.
-        insertRec(root, r);
     }
 
     private Node insertRec(Node current, BirdRecord r) throws DictionaryException {
-        if (r.getDataKey() == null) {
-            throw new DictionaryException("Attempted to insert a BirdRecord with a null DataKey.");
-        }
-
         if (current == null) {
-            System.out.println("[insertRec] Inserting new node for BirdRecord: " + r.getDataKey().getBirdName());
-            return new Node(r); // Create and return a new node with the BirdRecord.
+            System.out.println("[insertRec] Inserting new node for BirdRecord!");
+            return new Node(r);
         }
 
-        // Check if the current node's DataKey is null before comparison
-        if (current.getData() == null || current.getData().getDataKey() == null) {
-            // Log the error and return the current node without modification
-            System.out.println("[insertRec] Skipping insertion due to null DataKey in current node.");
-            return current;
-        }
-
-        // Log current operation details for debugging.
-        System.out.println("[insertRec] Current Node DataKey: " + current.getData().getDataKey() + ", Inserting DataKey: " + r.getDataKey());
-
-        // Compare the current node's DataKey with the inserting record's DataKey.
         int comparison = current.getData().getDataKey().compareTo(r.getDataKey());
-
-        // Case 2: If the inserting DataKey is smaller, go left.
+        System.out.println("BIRD KEY:" + r.getDataKey().getBirdName());
         if (comparison > 0) {
             current.setLeftChild(insertRec(current.getLeftChild(), r));
-        }
-        // Case 3: If the inserting DataKey is larger, go right.
-        else if (comparison < 0) {
+        } else if (comparison < 0) {
             current.setRightChild(insertRec(current.getRightChild(), r));
-        }
-        // Case 4: Duplicate DataKey.
-        else {
+        } else {
             throw new DictionaryException("A record with the same key already exists: " + r.getDataKey().getBirdName());
         }
 
         return current;
     }
+
 
 
 
