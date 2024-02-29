@@ -1,4 +1,4 @@
-package assignment.birds;
+package assignment.countries;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +11,7 @@ import javafx.stage.Stage;
  *
  * @author Ouda
  */
-public class Birds extends Application {
+public class Countries extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -20,7 +20,7 @@ public class Birds extends Application {
         Scene scene = new Scene(root);
 
         stage.getIcons().add(new Image("file:src/main/resources/assignment/birds/images/UMIcon.png"));
-        stage.setTitle("Birds Portal");
+        stage.setTitle("Countries Portal");
 
         stage.setScene(scene);
         stage.show();

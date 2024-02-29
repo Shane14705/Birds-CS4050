@@ -15,4 +15,6 @@ module assignment.birds {
 */
     opens assignment.birds to javafx.fxml;
     exports assignment.birds;
+    exports assignment.countries;
+    opens assignment.countries to javafx.fxml;
 }

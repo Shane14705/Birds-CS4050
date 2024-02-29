@@ -1,4 +1,4 @@
-package assignment.birds;
+package assignment.countries;
 
 public class OrderedDictionary implements OrderedDictionaryADT {
 
@@ -17,7 +17,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
      * @throws assignment/birds/DictionaryException.java
      */
     @Override
-    public BirdRecord find(DataKey k) throws DictionaryException {
+    public CountryRecord find(DataKey k) throws DictionaryException {
         Node current = root;
         int comparison;
         if (root.isEmpty()) {         
@@ -54,7 +54,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
      * @throws birds.DictionaryException
      */
     @Override
-    public void insert(BirdRecord r) throws DictionaryException {
+    public void insert(CountryRecord r) throws DictionaryException {
         // Write this method
     }
 
@@ -80,7 +80,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
      * @throws birds.DictionaryException
      */
     @Override
-    public BirdRecord successor(DataKey k) throws DictionaryException{
+    public CountryRecord successor(DataKey k) throws DictionaryException{
         // Write this method
         return null; // change this statement
     }
@@ -96,7 +96,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
      * @throws birds.DictionaryException
      */
     @Override
-    public BirdRecord predecessor(DataKey k) throws DictionaryException{
+    public CountryRecord predecessor(DataKey k) throws DictionaryException{
         // Write this method
         return null; // change this statement
     }
@@ -108,7 +108,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
      * @return
      */
     @Override
-    public BirdRecord smallest() throws DictionaryException{
+    public CountryRecord smallest() throws DictionaryException{
         // Write this method
         return null; // change this statement
     }
@@ -118,7 +118,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
 	 * null if the dictionary is empty.
      */
     @Override
-    public BirdRecord largest() throws DictionaryException{
+    public CountryRecord largest() throws DictionaryException{
         // Write this method
         return null; // change this statement
     }
