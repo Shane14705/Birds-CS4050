@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -108,11 +109,13 @@ public class CountriesController implements Initializable {
         if (player != null) {
             player.stop();
         }
-        String img = country.getImage();
-        Image countryImage = new Image("file:src/main/resources/assignment/birds/images/" + img);
-        image.setImage(countryImage);
-        title.setText(country.getDataKey().getCountryName());
-        about.setText(country.getAbout());
+        String img = bird.getImage();
+        Image birdImage = new Image("file:src/main/resources/assignment/birds/images/" + img);
+        image.setImage(birdImage);
+        // Log DataKey and BirdRecord details
+        System.out.println("Showing Bird: " + bird.getDataKey().getBirdName() + ", About: " + bird.getAbout() + ", Sound: " + bird.getSound() + ", Image: " + bird.getImage());
+        title.setText(bird.getDataKey().getBirdName());
+        about.setText(bird.getAbout());
     }
 
     private void displayAlert(String msg) {
@@ -154,20 +157,76 @@ public class CountriesController implements Initializable {
     }
 
     public void first() {
-        // Write this method
+        try {
+            System.out.println("[first] Attempting to find the smallest bird record.");
+            BirdRecord smallest = database.smallest();
+            bird = smallest;
+            System.out.println("SMALLEST NAME:" + smallest.getImage());
+            if (smallest != null && smallest.getDataKey() != null) {
+                System.out.println("[first] Smallest BirdRecord found: " + smallest.getDataKey().getBirdName());
+                showBird();
+            } else {
+                throw new DictionaryException("Error: Smallest BirdRecord or its key is null.");
+            }
+        } catch (DictionaryException ex) {
+            System.out.println("[first] Exception caught: " + ex.getMessage());
+            displayAlert("No birds in the database.");
+        }
     }
+
+
+
 
     public void last() {
-        // Write this method
+        try {
+            bird = database.largest();
+            if (bird != null) {
+                showBird();
+            }
+        } catch (DictionaryException ex) {
+            displayAlert("No birds in the database.");
+        }
     }
 
+
     public void next() {
-        // Write this method;
+        if (bird == null) {
+            displayAlert("No current bird selected.");
+            return;
+        }
+
+        try {
+            BirdRecord nextBird = database.successor(bird.getDataKey());
+            if (nextBird != null) {
+                bird = nextBird;
+                showBird();
+            } else {
+                displayAlert("This is the last bird in the database.");
+            }
+        } catch (DictionaryException ex) {
+            displayAlert("Error finding next bird: " + ex.getMessage());
+        }
     }
 
     public void previous() {
-        // Write this method
+        if (bird == null) {
+            displayAlert("No current bird selected.");
+            return;
+        }
+
+        try {
+            BirdRecord previousBird = database.predecessor(bird.getDataKey());
+            if (previousBird != null) {
+                bird = previousBird;
+                showBird();
+            } else {
+                displayAlert("This is the first bird in the database.");
+            }
+        } catch (DictionaryException ex) {
+            displayAlert("Error finding previous bird: " + ex.getMessage());
+        }
     }
+
 
     public void play() {
         String filename = "src/main/resources/assignment/birds/sounds/" + country.getSound();
@@ -186,6 +245,7 @@ public class CountriesController implements Initializable {
         }
     }
 
+
     public void loadDictionary() {
         Scanner input;
         int line = 0;
@@ -200,13 +260,18 @@ public class CountriesController implements Initializable {
                 switch (line % 3) {
                     case 0:
                         size = Integer.parseInt(data);
+                        System.out.println("[load] BIRD SIZE:" + birdSize);
                         break;
                     case 1:
-                        countryName = data;
+                        birdName = data;
+                        System.out.println("[load] BIRD NAME:" + birdName);
                         break;
                     default:
                         description = data;
-                        database.insert(new CountryRecord(new DataKey(countryName, size), description, countryName + ".mp3", countryName + ".jpg"));
+                        DataKey key = new DataKey(birdName, size);
+                        System.out.println("[load] BIRD DESCRIPTION:" + description);
+                        System.out.println("[load] BIRD KEY:" + key.getBirdName() + "," + key.getBirdSize());
+                        database.insert(new BirdRecord(key, description, birdName + ".mp3", birdName + ".jpg"));
                         break;
                 }
                 line++;
