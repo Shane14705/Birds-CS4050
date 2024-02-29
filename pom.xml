@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>assignment</groupId>
-    <artifactId>countries</artifactId>
+    <artifactId>Birds</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>countries</name>
+    <name>Birds</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -112,7 +112,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>assignment.countries/assignment.countries.countries</mainClass>
+                            <mainClass>assignment.birds/assignment.birds.Birds</mainClass>
                         </configuration>
                     </execution>
                 </executions>

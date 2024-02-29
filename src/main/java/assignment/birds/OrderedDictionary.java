@@ -1,4 +1,4 @@
-package assignment.countries;
+package assignment.birds;
 
 public class OrderedDictionary implements OrderedDictionaryADT {
 
@@ -17,7 +17,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
      * @throws assignment/birds/DictionaryException.java
      */
     @Override
-    public CountryRecord find(DataKey k) throws DictionaryException {
+    public BirdRecord find(DataKey k) throws DictionaryException {
         Node current = root;
         int comparison;
         if (root.isEmpty()) {         

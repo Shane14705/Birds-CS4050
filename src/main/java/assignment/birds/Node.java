@@ -1,4 +1,4 @@
-package assignment.countries;
+package assignment.birds;
 
 /**
  * a class Node to represent the nodes of the binary search tree. Each node will
@@ -7,31 +7,31 @@ package assignment.countries;
  */
 
 public class Node {
-	private CountryRecord _data;
+	private BirdRecord _data;
 	private Node _leftChild;
 	private Node _rightChild;
 	private Node _parent;
 
 	// default constructor
 	public Node() {
-		this(new CountryRecord()); // storing null Record objects
+		this(new BirdRecord()); // storing null Record objects
 	}
 
-	public Node(CountryRecord data) {
+	public Node(BirdRecord data) {
 		this(data, null, null);
 	}
 
-	public Node(CountryRecord data, Node leftChild, Node rightChild) {
+	public Node(BirdRecord data, Node leftChild, Node rightChild) {
 		_data = data;
 		setLeftChild(leftChild);
 		setRightChild(rightChild);
 	}
 
-	public CountryRecord getData() {
+	public BirdRecord getData() {
 		return _data;
 	}
 
-	public void setData(CountryRecord data) {
+	public void setData(BirdRecord data) {
 		_data = data;
 	}
 

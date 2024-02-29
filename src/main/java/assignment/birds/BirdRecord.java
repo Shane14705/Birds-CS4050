@@ -1,10 +1,10 @@
-package assignment.countries;
+package assignment.birds;
 
 /**
  * This class represents a bird record in the database. Each record consists of two
  * parts: a DataKey and the data associated with the DataKey.
  */
-public class CountryRecord {
+public class BirdRecord {
 
     private DataKey key;
     private String about;
@@ -12,11 +12,11 @@ public class CountryRecord {
     private String image;
 
     // default constructor
-    public CountryRecord() {
+    public BirdRecord() {
         this(null, null, null, null);
     }
 
-    public CountryRecord(DataKey k, String a, String s, String i) {
+    public BirdRecord(DataKey k, String a, String s, String i) {
         key = k;
         about = a;
         sound = s;

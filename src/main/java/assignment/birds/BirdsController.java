@@ -1,4 +1,4 @@
-package assignment.countries;
+package assignment.birds;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -28,14 +28,14 @@ import java.util.logging.Logger;
  *
  * @author Ouda
  */
-public class CountriesController implements Initializable {
+public class BirdsController implements Initializable {
 
     @FXML
     private MenuBar mainMenu;
     @FXML
     private ImageView image;
     @FXML
-    private BorderPane CountryPortal;
+    private BorderPane BirdPortal;
     @FXML
     private Label title;
     @FXML
@@ -51,8 +51,8 @@ public class CountriesController implements Initializable {
     Media media;
     MediaPlayer player;
     OrderedDictionary database = null;
-    CountryRecord country = null;
-    int countrySize = 1;
+    BirdRecord bird = null;
+    int birdSize = 1;
 
     @FXML
     public void exit() {
@@ -61,49 +61,49 @@ public class CountriesController implements Initializable {
     }
 
     public void find() {
-        DataKey key = new DataKey(this.name.getText(), countrySize);
+        DataKey key = new DataKey(this.name.getText(), birdSize);
         try {
-            country = database.find(key);
-            showCountry();
+            bird = database.find(key);
+            showBird();
         } catch (DictionaryException ex) {
             displayAlert(ex.getMessage());
         }
     }
 
     public void delete() {
-        CountryRecord previousCountry = null;
+        BirdRecord previousBird = null;
         try {
-            previousCountry = database.predecessor(country.getDataKey());
+            previousBird = database.predecessor(bird.getDataKey());
         } catch (DictionaryException ex) {
 
         }
-        CountryRecord nextCountry = null;
+        BirdRecord nextBird = null;
         try {
-            nextCountry = database.successor(country.getDataKey());
+            nextBird = database.successor(bird.getDataKey());
         } catch (DictionaryException ex) {
 
         }
-        DataKey key = country.getDataKey();
+        DataKey key = bird.getDataKey();
         try {
             database.remove(key);
         } catch (DictionaryException ex) {
             System.out.println("Error in delete "+ ex);
         }
         if (database.isEmpty()) {
-            this.CountryPortal.setVisible(false);
-            displayAlert("No more countries in the database to show");
+            this.BirdPortal.setVisible(false);
+            displayAlert("No more birds in the database to show");
         } else {
-            if (previousCountry != null) {
-                country = previousCountry;
-                showCountry();
-            } else if (nextCountry != null) {
-                country = nextCountry;
-                showCountry();
+            if (previousBird != null) {
+                bird = previousBird;
+                showBird();
+            } else if (nextBird != null) {
+                bird = nextBird;
+                showBird();
             }
         }
     }
 
-    private void showCountry() {
+    private void showBird() {
         play.setDisable(false);
         puase.setDisable(true);
         if (player != null) {
@@ -143,13 +143,13 @@ public class CountriesController implements Initializable {
     public void getSize() {
         switch (this.size.getValue().toString()) {
             case "Small":
-                this.countrySize = 1;
+                this.birdSize = 1;
                 break;
             case "Medium":
-                this.countrySize = 2;
+                this.birdSize = 2;
                 break;
             case "Large":
-                this.countrySize = 3;
+                this.birdSize = 3;
                 break;
             default:
                 break;
@@ -229,7 +229,7 @@ public class CountriesController implements Initializable {
 
 
     public void play() {
-        String filename = "src/main/resources/assignment/birds/sounds/" + country.getSound();
+        String filename = "src/main/resources/assignment/birds/sounds/" + bird.getSound();
         media = new Media(new File(filename).toURI().toString());
         player = new MediaPlayer(media);
         play.setDisable(true);
@@ -250,7 +250,7 @@ public class CountriesController implements Initializable {
         Scanner input;
         int line = 0;
         try {
-            String countryName = "";
+            String birdName = "";
             String description;
             int size = 0;
             input = new Scanner(new File("CountriesDatabase.txt"));
@@ -280,9 +280,9 @@ public class CountriesController implements Initializable {
             System.out.println("There was an error in reading or opening the file: CountriesDatabase.txt");
             System.out.println(e.getMessage());
         } catch (DictionaryException ex) {
-            Logger.getLogger(CountriesController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BirdsController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.CountryPortal.setVisible(true);
+        this.BirdPortal.setVisible(true);
         this.first();
     }
 

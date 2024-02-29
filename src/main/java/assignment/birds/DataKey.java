@@ -1,8 +1,8 @@
-package assignment.countries;
+package assignment.birds;
 
 public class DataKey {
-	private String countryName;
-	private int countrySize;
+	private String birdName;
+	private int birdSize;
 
 	// default constructor
 	public DataKey() {
@@ -10,16 +10,16 @@ public class DataKey {
 	}
         
 	public DataKey(String name, int size) {
-		countryName = name;
-		countrySize = size;
+		birdName = name;
+		birdSize = size;
 	}
 
-	public String getCountryName() {
-		return countryName;
+	public String getBirdName() {
+		return birdName;
 	}
 
-	public int getCountrySize() {
-		return countrySize;
+	public int getBirdSize() {
+		return birdSize;
 	}
 
 	/**
@@ -27,8 +27,8 @@ public class DataKey {
 	 * than k, and it returns 1 otherwise. 
 	 */
 	public int compareTo(DataKey k) {
-            if (this.getCountrySize() == k.getCountrySize()) {
-                int compare = this.countryName.compareTo(k.getCountryName());
+            if (this.getBirdSize() == k.getBirdSize()) {
+                int compare = this.birdName.compareTo(k.getBirdName());
                 if (compare == 0){
                      return 0;
                 } 
@@ -36,7 +36,7 @@ public class DataKey {
                     return -1;
                 }
             }
-            else if(this.getCountrySize() < k.getCountrySize()){
+            else if(this.getBirdSize() < k.getBirdSize()){
                     return -1;
             }
             return 1;
