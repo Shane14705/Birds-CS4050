@@ -253,7 +253,7 @@ public class CountriesController implements Initializable {
             String countryName = "";
             String description;
             int size = 0;
-            input = new Scanner(new File("BirdsDatabase.txt"));
+            input = new Scanner(new File("CountriesDatabase.txt"));
             while (input.hasNext()) // read until  end of file
             {
                 String data = input.nextLine();
@@ -277,7 +277,7 @@ public class CountriesController implements Initializable {
                 line++;
             }
         } catch (IOException e) {
-            System.out.println("There was an error in reading or opening the file: BirdsDatabase.txt");
+            System.out.println("There was an error in reading or opening the file: CountriesDatabase.txt");
             System.out.println(e.getMessage());
         } catch (DictionaryException ex) {
             Logger.getLogger(CountriesController.class.getName()).log(Level.SEVERE, null, ex);
