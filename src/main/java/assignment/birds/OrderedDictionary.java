@@ -75,7 +75,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
         }
 
         int comparison = current.getData().getDataKey().compareTo(r.getDataKey());
-        System.out.println("BIRD KEY:" + r.getDataKey().getBirdName());
+        System.out.println("COUNTRY KEY:" + r.getDataKey().getBirdName());
         if (comparison > 0) {
             current.setLeftChild(insertRec(current.getLeftChild(), r));
         } else if (comparison < 0) {

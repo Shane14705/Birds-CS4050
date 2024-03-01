@@ -142,13 +142,13 @@ public class BirdsController implements Initializable {
 
     public void getSize() {
         switch (this.size.getValue().toString()) {
-            case "Small":
+            case "Americas":
                 this.birdSize = 1;
                 break;
-            case "Medium":
+            case "Europe/Africa":
                 this.birdSize = 2;
                 break;
-            case "Large":
+            case "Asia":
                 this.birdSize = 3;
                 break;
             default:
@@ -290,9 +290,9 @@ public class BirdsController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         database = new OrderedDictionary();
         size.setItems(FXCollections.observableArrayList(
-                "Small", "Medium", "Large"
+                "Americas", "Europe/Africa", "Asia"
         ));
-        size.setValue("Small");
+        size.setValue("Americas");
     }
 
 }
